@@ -1,5 +1,15 @@
 instagrim-eclipse
 =================
+// I have added functions as follows:
+Extending registering: Check the username whether exists(Ajax-servlet), Check password, Add first,last name,email register.
+Upload and Change UserPortrait.
+Commment on (or give a description) to the pictures.
+Show comment(description).
+Delete the picture.
+Change user info.
+And something else....
+//
+
 Instagrim  is an example web app using Cassandra as a back end.   The app allows picture uploads, creates a thumbnail and 
 a  B/W version of the picture, and a simple login.
 
