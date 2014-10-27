@@ -1,6 +1,7 @@
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -41,7 +43,7 @@ public class Image extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Cluster cluster;
-    private HashMap CommandsMap = new HashMap();
+    private HashMap<String, Integer> CommandsMap = new HashMap<String, Integer>();
     
     
 
@@ -60,6 +62,7 @@ public class Image extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
+        System.out.println("Cluster has been initialed");
     }
 
     /**
@@ -89,6 +92,12 @@ public class Image extends HttpServlet {
             default:
                 error("Bad Operator", response);
         }
+       /** cluster.close();
+        if (cluster.isClosed()){
+        	System.out.println("Cluster has been disconnected");
+        }else{
+        	System.out.println("Cluster hasnt been disconnected");
+        }**/
     }
 
     private void DisplayImageList(String User, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -120,6 +129,7 @@ public class Image extends HttpServlet {
             out.write(buffer, 0, length);
         }
         out.close();
+        input.close();   // add
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,12 +157,15 @@ public class Image extends HttpServlet {
 
                 is.close();
             }
+            
             RequestDispatcher rd = request.getRequestDispatcher("/upload.jsp");
              rd.forward(request, response);
         }
+        
 
     }
 
+    
     private void error(String mess, HttpServletResponse response) throws ServletException, IOException {
 
         PrintWriter out = null;

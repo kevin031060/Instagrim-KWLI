@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>uk.ac.dundee.computing.aec.instagrim</groupId>
-  <artifactId>instagrim</artifactId>
+  <groupId>uk.ac.dundee.computing.aec.instagrimKWLI</groupId>
+  <artifactId>instagrimKWLI</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>instagrim Maven Webapp</name>
+  <name>instagrimKWLI Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -31,6 +31,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>instagrim</finalName>
+    <finalName>instagrimKWLI</finalName>
   </build>
 </project>

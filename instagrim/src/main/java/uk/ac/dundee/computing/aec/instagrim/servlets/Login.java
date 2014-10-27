@@ -7,8 +7,10 @@
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
+
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Set;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
@@ -28,12 +31,17 @@ import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
 
-    Cluster cluster=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Cluster cluster=null;
 
 
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
+        System.out.println("Cluster has been initialed");
     }
 
     /**
@@ -54,23 +62,35 @@ public class Login extends HttpServlet {
         User us=new User();
         us.setCluster(cluster);
         boolean isValid=us.IsValidUser(username, password);
+        String firstname=us.Getfirstname(username);// get user's firstname
+        String lastname=us.Getlastname(username);// get user's lastname
+        String email=us.Getemail(username);
         HttpSession session=request.getSession();
         System.out.println("Session in servlet "+session);
         if (isValid){
             LoggedIn lg= new LoggedIn();
             lg.setLogedin();
             lg.setUsername(username);
+            lg.setFirstname(firstname);
+            lg.setLastname(lastname);
+            lg.setEmail(email);
             //request.setAttribute("LoggedIn", lg);
             
             session.setAttribute("LoggedIn", lg);
             System.out.println("Session in servlet "+session);
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd=request.getRequestDispatcher("/welcom.jsp");
 	    rd.forward(request,response);
             
         }else{
-            response.sendRedirect("/Instagrim/login.jsp");
+            response.sendRedirect("/instagrimKWLI/login.jsp");
         }
-        
+        /**cluster.close();
+        if (cluster.isClosed()){
+        	System.out.println("Cluster has been disconnected");
+        }else{
+        	System.out.println("Cluster hasnt been disconnected");
+        }
+        **/
     }
 
     /**
@@ -78,7 +98,10 @@ public class Login extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    
+    
     @Override
+    
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

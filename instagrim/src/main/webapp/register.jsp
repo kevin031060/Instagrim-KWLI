@@ -9,36 +9,65 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Instagrim</title>
+        <title>instagrimKWLI</title>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
     <body>
         <header>
-        <h1>InstaGrim ! </h1>
+        <h1>instagrimKWLI ! </h1>
         <h2>Your world in Black and White</h2>
         </header>
         <nav>
             <ul>
                 
-                <li><a href="/Instagrim/Images/majed">Sample Images</a></li>
+                <li><a href="/instagrimKWLI/Images/majed">Sample Images</a></li>
             </ul>
         </nav>
        
         <article>
             <h3>Register as user</h3>
-            <form method="POST"  action="Register">
-                <ul>
-                    <li>User Name <input type="text" name="username"></li>
-                    <li>Password <input type="password" name="password"></li>
-                </ul>
+            <form method="POST"  action="Register" >
+                <div>
+                 <table style=" margin:0 auto">
+                    <tr>
+                    <td>User Name</td>
+                    <td><input type="text" name="username" id="account"  onChange='isExist()'></td>
+                    <td><div id="result" style="color: #FF0000"></div></td>
+                    </tr>
+                    <tr>
+                    <td>Password</td>  
+                    <td><input type="password" name="password" id="pwd" onChange='pwLength()'></td>   
+                    <td><div id="checkP" style="color: #FF0000"></div></td>    
+                    </tr>
+                    <tr>
+                    <td>Password Ensure</td> 
+                    <td><input type="password" name="password1" id="pwd1"></td>
+                    <td><div id="checkP1" style="color: #FF0000"></div></td>
+                    </tr>     
+                    <tr>        
+                    <td>First Name</td>
+                    <td><input type="text" name="firstname"></td>
+                    </tr>
+                    <tr>
+                    <td>Last Name</td> 
+                    <td><input type="text" name="lastname"></td>
+                    </tr>
+                    <tr>
+                    <td>email</td>
+                    <td><input type="email" name="email"></td>
+                    </tr>
+                    
+                 </table>
+                </div>
                 <br/>
-                <input type="submit" value="Regidter"> 
+                <input type="submit" value="Regidter" onclick="return check();"> 
+                <script type="text/javascript" src=checkuser.js></script>
             </form>
 
         </article>
         <footer>
             <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
+                <li class="footer"><a href="/instagrimKWLI/login.jsp">Home</a></li>
             </ul>
         </footer>
     </body>

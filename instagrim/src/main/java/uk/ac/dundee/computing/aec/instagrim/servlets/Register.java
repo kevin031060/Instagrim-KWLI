@@ -7,17 +7,25 @@
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -25,7 +33,11 @@ import uk.ac.dundee.computing.aec.instagrim.models.User;
  */
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
-    Cluster cluster=null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Cluster cluster=null;
     public void init(ServletConfig config) throws ServletException {
         // TODO Auto-generated method stub
         cluster = CassandraHosts.getCluster();
@@ -47,13 +59,29 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-        
+        String firstname=request.getParameter("firstname");
+        String lastname=request.getParameter("lastname");
+        String originalEmail=request.getParameter("email");
+/**        String[] emailSplit=new String[10];
+        emailSplit=originalEmail.split("@|\\.");
+        Set<String> email=new HashSet<String>();
+        for (int i=0; i<emailSplit.length; i++){
+        	email.add(emailSplit[i]);
+        }
+**/     
+        Set<String> email=new HashSet<String>();
+        email.add(originalEmail);
         User us=new User();
         us.setCluster(cluster);
-        us.RegisterUser(username, password);
-        
-	response.sendRedirect("/Instagrim");
-        
+        us.RegisterUser(username, password,firstname,lastname,email);
+        response.sendRedirect("/instagrimKWLI/Successful.jsp");
+        /**cluster.close();
+        if (cluster.isClosed()){
+        	System.out.println("Cluster has been disconnected");
+        }else{
+        	System.out.println("Cluster hasnt been disconnected");
+        }
+        **/
     }
 
     /**
